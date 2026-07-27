@@ -3,15 +3,15 @@ package ru.yandex.practicum.didukh;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import ru.yandex.practicum.didukh.pageObject.OrderFormPage;
-import ru.yandex.practicum.didukh.pageObject.RentPage;
-import ru.yandex.practicum.didukh.pageObject.ScooterHomePage;
+import ru.yandex.practicum.didukh.pageobject.OrderFormPage;
+import ru.yandex.practicum.didukh.pageobject.RentPage;
+import ru.yandex.practicum.didukh.pageobject.ScooterHomePage;
 
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class OrderTest extends CommonTest {
+public class OrderTest extends BaseTest {
 
     @ParameterizedTest
     @MethodSource({"infoForRent"})

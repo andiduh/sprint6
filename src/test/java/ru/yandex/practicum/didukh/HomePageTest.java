@@ -6,8 +6,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import ru.yandex.practicum.didukh.pageObject.ScooterHomePage;
-import ru.yandex.practicum.didukh.pageObject.TrackPage;
+import ru.yandex.practicum.didukh.pageobject.ScooterHomePage;
+import ru.yandex.practicum.didukh.pageobject.TrackPage;
 
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -15,7 +15,9 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class HomePageTest extends CommonTest {
+import static ru.yandex.practicum.didukh.constants.URL;
+
+public class HomePageTest extends BaseTest {
 
     private final String[] expectedAnswersList = new String[] {
             "Сутки — 400 рублей. Оплата курьеру — наличными или картой.",
@@ -28,20 +30,17 @@ public class HomePageTest extends CommonTest {
             "Да, обязательно. Всем самокатов! И Москве, и Московской области."
     };
 
-    @Test
-    public void clickFAQsButtonsOpenAnswers() {
+    @ParameterizedTest
+    @MethodSource({"numberOfQuestion"})
+    public void clickFaqsButtonsOpenAnswers(int i) {
 
         ScooterHomePage objScooterHomePage = new ScooterHomePage(driver);
 
-        int count = objScooterHomePage.getButtonsOfFAQCount();
+        WebElement element = driver.findElement(objScooterHomePage.question(i));
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
 
-        for (int i = 0; i < count; i += 1) {
-            WebElement element = driver.findElement(objScooterHomePage.question(i));
-            ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
-
-            objScooterHomePage.clickButtonOfFAQ(i);
-            assertEquals(expectedAnswersList[i], objScooterHomePage.getTextOfAnswer(i));
-        }
+        objScooterHomePage.clickButtonOfFaq(i);
+        assertEquals(expectedAnswersList[i], objScooterHomePage.getTextOfAnswer(i));
     }
 
     @Test
@@ -64,7 +63,7 @@ public class HomePageTest extends CommonTest {
         for (String windowHandle : driver.getWindowHandles()) {
             driver.switchTo().window(windowHandle);
         }
-        assertEquals("https://qa-scooter.education-services.ru/", Objects.requireNonNull(driver.getCurrentUrl()));
+        assertEquals(URL, Objects.requireNonNull(driver.getCurrentUrl()));
     }
 
     @ParameterizedTest
@@ -77,12 +76,25 @@ public class HomePageTest extends CommonTest {
         assertTrue(objTrackPage.isErrorTextDisplayed());
     }
 
+    static Stream<Arguments> numberOfQuestion() {
+        return Stream.of(
+                Arguments.of(0),
+                Arguments.of(1),
+                Arguments.of(2),
+                Arguments.of(3),
+                Arguments.of(4),
+                Arguments.of(5),
+                Arguments.of(6),
+                Arguments.of(7)
+        );
+    }
+
     static Stream<Arguments> incorrectNumberOfOrder() {
         return Stream.of(
                 Arguments.of(
                         "123456"),
                 Arguments.of(
-                        "987654")
+                        "9876")
         );
     }
 }

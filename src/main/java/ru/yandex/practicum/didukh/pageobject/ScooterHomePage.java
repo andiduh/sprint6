@@ -1,4 +1,4 @@
-package ru.yandex.practicum.didukh.pageObject;
+package ru.yandex.practicum.didukh.pageobject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -7,13 +7,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static ru.yandex.practicum.didukh.constants.URL;
+
 import java.time.Duration;
 
 public class ScooterHomePage {
     private final WebDriver driver;
 
-    // Кнопки с вопросами
-    private final By buttonsOfFAQ = By.xpath(".//div[@class='accordion__button']");
     // Кнопка Заказать в хедере
     private final By orderButtonInHeader = By.xpath(".//button[@class = 'Button_Button__ra12g']");
     // Кнопка Заказать на странице
@@ -47,18 +47,14 @@ public class ScooterHomePage {
         driver.findElement(cookieButton).click();
     }
 
-    public void OpenSite() {
-        driver.get("https://qa-scooter.education-services.ru/");
+    public void openSite() {
+        driver.get(URL);
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.elementToBeClickable(cookieButton));
         clickCookieButton();
     }
-    public void clickButtonOfFAQ(int index) {
+    public void clickButtonOfFaq(int index) {
         driver.findElement(question(index)).click();
-    }
-
-    public int getButtonsOfFAQCount() {
-        return driver.findElements(buttonsOfFAQ).size();
     }
 
     public String getTextOfAnswer(int index) {

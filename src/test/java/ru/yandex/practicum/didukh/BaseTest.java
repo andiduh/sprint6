@@ -4,9 +4,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import ru.yandex.practicum.didukh.pageObject.ScooterHomePage;
+import ru.yandex.practicum.didukh.pageobject.ScooterHomePage;
 
-public class CommonTest {
+public class BaseTest {
     protected WebDriver driver;
 
     @BeforeEach
@@ -14,7 +14,7 @@ public class CommonTest {
         driver = new ChromeDriver();
         // driver = new FirefoxDriver();
         ScooterHomePage objScooterHomePage = new ScooterHomePage(driver);
-        objScooterHomePage.OpenSite();
+        objScooterHomePage.openSite();
     }
 
     @AfterEach

@@ -1,4 +1,4 @@
-package ru.yandex.practicum.didukh.pageObject;
+package ru.yandex.practicum.didukh.pageobject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
